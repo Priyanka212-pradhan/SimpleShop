@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Shop - Admin Panel</title>
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Include Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEJwDDRrq0n6cF8dO6Zz8vCkZpum8fD5K1gkPq7YfP5v0dJb7f5I2Z9lwUglr" crossorigin="anonymous">
+
+    <style>
+        /* Navigation bar styling */
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .logo a {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #333;
+            text-decoration: none;
+        }
+
+           /* Admin Section */
+           .admin-section {
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .admin-section h2 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* Admin Panel Section Styling
+        .admin-section {
+            background-color: #f9f9f9;
+        }
+
+        .admin-section h2 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 20px;
+        } */
+
+        /* Centering the table */
+        .admin-table-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin-top: 20px;
+        }
+
+        .admin-table {
+            width: 80%;
+        }
+
+        .admin-table th,
+        td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        /* Table Image Styling */
+        .admin-table img {
+            width: 50px;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        /* Add New Button Alignment */
+        .add-new-btn {
+            align-self: flex-end;
+            margin-bottom: 20px;
+        }
+
+        /* Responsive navigation for mobile */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                width: 100%;
+                text-align: center;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                background: white;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 10px;
+            }
+
+            .nav-links.open {
+                display: block;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo"><a href="/">Simple <span>Shop</span></a></div>
+        <div class="menu-toggle" onclick="toggleMenu()">&#9776;</div>
+        <ul class="nav-links">
+            <% if (user) { %>
+                <li>Welcome, <%= user.username %>!</li>
+                <li><a href="/admin">Dashboard</a></li>
+                <li><a href="/logout">Logout</a></li>
+            <% } else { %>
+                <li><a href="/#products">Place Order</a></li>
+                <li> <a href="/login">Login</a></li>   
+                <li> <a href="/register">Register</a></li>   
+            <% } %>
+        </ul>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+        <h1>Add product</h1>
+
+        <!-- Toastr Notifications -->
+        <% if (errorMessage && errorMessage.length> 0) { %>
+            <script>
+                toastr.error("<%= errorMessage[0] %>"); 
+            </script>
+            <% } %>
+
+                <!-- Add product Form -->
+                <form action="/admin/product" method="POST" class="form-container" onsubmit="return validateForm()">
+                    <label for="productName">Product Name</label>
+                    <input type="text" id="productName" name="productName" required>
+
+                    <label for="productPrice">Price</label>
+                    <input type="number" id="productPrice" name="productPrice" required>
+
+                    <label for="imageUrl">Image URL</label>
+                    <input type="text" id="imageUrl" name="imageUrl" required>
+
+                    <label for="productDescription">Description</label>
+                    <br />
+                    <textarea id="productDescription" name="productDescription" rows="4" required></textarea>
+                    <br />
+
+                    <button type="submit" class="btn">Add product</button>
+                </form>
+
+                <p><a href="/admin">Back to Dashboard</a></p>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            document.querySelector(".nav-links").classList.toggle("open");
+        }
+
+        function validateForm() {
+            // Validate product Name
+            var productName = document.getElementById('productName').value;
+            if (!/^[a-zA-Z\s]+$/.test(productName)) {
+                toastr.error('product Name must contain only letters and spaces.');
+                return false;
+            }
+
+            // Validate Price
+            var productPrice = document.getElementById('productPrice').value;
+            if (productPrice <= 0) {
+                toastr.error('Price should be positive.');
+                return false;
+            }
+
+            // Validate Image URL
+            var imageUrl = document.getElementById('imageUrl').value;
+            var urlPattern = /^(https?:\/\/(?:www\.)?[\w-]+(?:\.[\w-]+)+([\/?].*)?)$/;
+            if (!urlPattern.test(imageUrl)) {
+                toastr.error('Please enter a valid URL.');
+                return false;
+            }
+
+            // Validate Description
+            var productDescription = document.getElementById('productDescription').value;
+            if (productDescription.trim().length === 0) {
+                toastr.error('Product description cannot be empty.');
+                return false;
+            }
+
+            return true; // Form is valid
+        }
+    </script>
+
+</body>
+
+</html>

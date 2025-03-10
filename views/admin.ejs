@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Modern Shop</title>
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* Apply previous styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f5f7fa;
+            color: #333;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            font-weight: 600;
+            color: #333;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #007bff;
+        }
+
+        /* Welcome Message */
+        .welcome-message {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* Admin Section */
+        .admin-section {
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .admin-section h2 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* Table Container */
+        .admin-table-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .admin-table {
+            width: 90%;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .admin-table th, .admin-table td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        /* Table Image */
+        .admin-table img {
+            width: 50px;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        /* Add Button */
+        .add-new-btn {
+            display: inline-block;
+            padding: 10px 15px;
+            background: #007bff;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-bottom: 20px;
+            transition: 0.3s;
+        }
+
+        .add-new-btn:hover {
+            background: #0056b3;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                width: 100%;
+                text-align: center;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                background: white;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 10px;
+            }
+
+            .nav-links.open {
+                display: block;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+      <!-- Navigation -->
+      <nav class="navbar">
+        <div class="logo"><a href="/">Simple <span>Shop</span></a></div>
+        <div class="menu-toggle" onclick="toggleMenu()">&#9776;</div>
+        <ul class="nav-links">
+            <% if (user) { %>
+                <li>Welcome, <%= user.username %>!</li>
+                <li><a href="/admin">Dashboard</a></li>
+                <li><a href="/logout">Logout</a></li>
+            <% } else { %>
+                <li><a href="/#mouth-watering">Place Order</a></li>
+                <li> <a href="/login">Login</a></li>   
+                <li> <a href="/register">Register</a></li>   
+            <% } %>
+        </ul>
+    </nav>
+
+    <!-- Admin Section -->
+    <div class="admin-section">
+        <div class="admin-table-container">
+            <!-- Add New Product -->
+            <a href="/admin/product" class="add-new-btn">+ Add Product</a>
+
+            <!-- Product List -->
+            <h3>Product List</h3>
+
+            <!-- Product Table -->
+            <table class="table table-bordered admin-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th colspan="2">Item</th>
+                        <th>Price</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% products.forEach((product, index) => { %>
+                        <tr>
+                            <td><%= index + 1 %></td>
+                            <td><img src="<%= product.image_url %>" alt="<%= product.name %>"></td>
+                            <td><%= product.name %></td>
+                            <td>$<%= product.price %></td>
+                            <td>
+                                <!-- Edit -->
+                                <a href="/admin/update/<%= product.id %>" class="btn btn-sm btn-primary">Edit</a>
+                                <!-- Delete -->
+                                <form method="POST" action="/admin/delete/<%= product.id %>" style="display:inline;">
+                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            document.querySelector('.nav-links').classList.toggle('open');
+        }
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

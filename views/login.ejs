@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Simple Shop</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- Toastr CSS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Login to Simple Shop</h1>
+
+        <% if (errorMessage && errorMessage.length> 0) { %>
+            <script>
+                toastr.error("<%= errorMessage[0] %>"); 
+            </script>
+            <% } %>
+
+                <% if (successMessage && successMessage.length> 0) { %>
+                    <script>
+                        toastr.success("<%= successMessage[0] %>"); 
+                    </script>
+                    <% } %>
+
+                        <form action="/login" method="POST" class="form-container">
+                            <label>Username</label>
+                            <input type="text" name="username" required>
+
+                            <label>Password</label>
+                            <input type="password" name="password" required>
+
+                            <button type="submit" class="btn">Login</button>
+                        </form>
+                        <p>Don't have an account? <a href="/register">Register here</a></p>
+    </div>
+
+</body>
+
+</html>

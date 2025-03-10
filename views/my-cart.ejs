@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Shop - Home</title>
+    <link rel="stylesheet" href="/css/style.css">
+      <!-- Toastr CSS -->
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" rel="stylesheet">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+  
+    <!-- <style>
+        /* Navigation bar styling */
+        .nav-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Text-based logo styling */
+        .nav-logo {
+            font-family: 'Arial', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #333;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-logo span {
+            color: #ff6600;
+            /* Highlight color */
+        }
+
+        /* Navigation link styling */
+        .nav-bar a {
+            padding: 10px 15px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-bar a:hover {
+            color: #000;
+        }
+
+        /* Hamburger menu styling */
+        .hamburger-menu {
+            display: none;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        /* Welcome message styling */
+        .welcome-message {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #333;
+            margin-right: 15px;
+        }
+
+        /* Menu Section Styling */
+        .menu-section {
+            padding: 40px 20px;
+            background-color: #f9f9f9;
+            text-align: center;
+        }
+
+        .menu-section h2 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .menu-item {
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .menu-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .menu-item h3 {
+            font-size: 1.5rem;
+            color: #333;
+            margin: 15px 0;
+        }
+
+        .menu-item p {
+            font-size: 1rem;
+            color: #666;
+            padding: 0 15px 15px;
+        }
+
+        .menu-item .price {
+            font-size: 1.2rem;
+            color: #ff6600;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+/** 
+        .menu-item .add-to-cart {
+            display: inline-block;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 25px; /* Rounded edges */
+            /* border: none;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .menu-item .add-to-cart:hover {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            transform: scale(1.05); Slight pop effect }/*
+
+        /* Responsive navigation for mobile */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                width: 100%;
+                text-align: center;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                background-color: #fff;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 10px;
+            }
+
+            .hamburger-menu {
+                display: block;
+            }
+
+            /* Show navigation links when menu is open */
+            .nav-links.open {
+                display: block;
+            }
+        }
+    </style> -->
+</head>
+
+<body>
+
+    <!-- Navigation bar for text logo and menu -->
+    <div class="navbar">
+        <div class="logo"><a href="/">Simple <span>Shop</span></a></div>
+        <div class="menu-toggle" onclick="toggleMenu()">&#9776;</div>
+        <ul class="nav-links">
+            <% if (user) { %>
+                <li>Welcome, <%= user.username %>!</li>
+                <li><a href="#products">Place Order</a></li>
+                <li><a href="my-cart">My cart</a></li>
+                <li><a href="/logout">Logout</a></li>
+                <% } else { %>
+                    <li><a href="#mouth-watering">Place Order</a></li>
+                    <li><a href="/login">Login</a></li>
+                    <li><a href="/register">Register</a></li>
+                    <% } %>
+                </ul>
+    </div>
+
+    <% if (errorMessage && errorMessage.length> 0) { %>
+        <script>
+            toastr.error("<%= errorMessage[0] %>"); 
+        </script>
+        <% } %>
+
+            <% if (successMessage && successMessage.length> 0) { %>
+                <script>
+                    toastr.success("<%= successMessage[0] %>"); 
+                </script>
+                <% } %>
+
+    <!-- My carts Section -->
+    <div id="my-carts" class="menu-section">
+        <h2>Your carts</h2>
+
+        <% if (carts.length === 0) { %>
+            <p>You have no carts yet.</p>
+        <% } else { %>
+            <div class="menu-grid">
+                <% carts.forEach(function(cart) { %>
+                    <div class="menu-item">
+                        <img src="<%= cart.image_url %>" alt="<%= cart.name %>">
+                        <h3><%= cart.name %></h3>
+                        <p><%= cart.description %></p>
+                        <div class="price">$<%= cart.price %></div>
+                        <!-- Remove from cart Button -->
+                        <form action="/remove-from-cart" method="POST">
+                            <input type="hidden" name="productId" value="<%= cart.product_id %>">
+                            <input type="hidden" name="redirectUrl" value="<%= requestUrl %>">
+                            <button type="submit" class="remove-from-cart">Remove from cart</button>
+                        </form>
+                        
+                    </div>
+                <% }); %>
+            </div>
+        <% } %>
+    </div>
+
+</body>
+
+</html>
