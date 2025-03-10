@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Shop</title>
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <!-- Toastr CSS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script defer src="/js/script.js"></script>
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo"><a href="/">Simple <span>Shop</span></a></div>
+        <div class="menu-toggle" onclick="toggleMenu()">&#9776;</div>
+        <ul class="nav-links">
+            <% if (user) { %>
+                <li>Welcome, <%= user.username %>!</li>
+                <!-- <li><a href="#products">Shop</a></li>
+                <li><a href="/my-cart">Cart</a></li> -->
+                <li><a href="/logout">Logout</a></li>
+            <% } else { %>
+                <li><a href="#products">Shop</a></li>
+                <li><a href="/login">Login</a></li>
+                <li><a href="/register">Register</a></li>
+            <% } %>
+        </ul>
+    </nav>
+
+    <% if (errorMessage && errorMessage.length > 0) { %>
+        <script> toastr.error("<%= errorMessage[0] %>"); </script>
+    <% } %>
+
+    <% if (successMessage && successMessage.length > 0) { %>
+        <script> toastr.success("<%= successMessage[0] %>"); </script>
+    <% } %>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Style Meets Simplicity</h1>
+            <p>Discover the latest trends, curated just for you.</p>
+            <a href="#products" class="shop-now">Shop Now</a>
+        </div>
+    </header>
+
+    <!-- Product Section -->
+    <section id="products" class="products">
+        <h2>Trending Outfits</h2>
+        <div class="product-grid">
+            <% products.forEach((product) => { %>
+                <div class="product-card">
+                    <img src="<%= product.image_url %>" alt="<%= product.name %>">
+                    <div class="product-info">
+                        <h3><%= product.name %></h3>
+                        <p><%= product.description %></p>
+                        <span class="price">$<%= product.price %></span>
+
+                        <% const isInCart = cartedProducts.has(product.id); %>
+                        <% if (isInCart) { %>
+                            <form action="/remove-from-cart" method="POST">
+                                <input type="hidden" name="productId" value="<%= product.id %>">
+                                <button type="submit" class="remove-from-cart">Remove from Cart</button>
+                            </form>
+                        <% } else { %>
+                            <form action="/add-to-cart" method="POST">
+                                <input type="hidden" name="productId" value="<%= product.id %>">
+                                <button type="submit" class="add-to-cart">Add to Cart</button>
+                            </form>
+                        <% } %>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </section>
+
+    <!-- Floating Cart Button -->
+    <a href="/my-cart" class="cart-float">
+        🛒
+    </a>
+
+    <script>
+        function toggleMenu() {
+            document.querySelector('.nav-links').classList.toggle('open');
+        }
+    </script>
+
+</body>
+
+</html>

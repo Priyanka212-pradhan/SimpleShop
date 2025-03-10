@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Simple Shop</title>
+</head>
+
+<body>
+    <h1>Welcome to Simple Shop</h1>
+    <% if (user) { %>
+        <p>Hello, <%= user.username %> | <a href="/logout">Logout</a></p>
+        <% } else { %>
+            <p><a href="/login">Login</a> | <a href="/register">Register</a></p>
+            <% } %>
+
+                <h2>Available products</h2>
+                <ul>
+                    <% foods.forEach(food=> { %>
+                        <li>
+                            <%= food.name %> - $<%= food.price %>
+                        </li>
+                        <% }) %>
+                </ul>
+</body>
+
+</html>
