@@ -86,7 +86,7 @@
         }
 
         /* Add Button */
-        .add-new-btn {
+        /* .add-new-btn {
             display: inline-block;
             padding: 10px 15px;
             background: #007bff;
@@ -96,7 +96,29 @@
             font-weight: bold;
             margin-bottom: 20px;
             transition: 0.3s;
-        }
+        } */
+
+        .add-new-btn {
+    display: flex;
+    align-items: left;
+    justify-content: left;
+    padding: 12px 18px;
+    background: linear-gradient(135deg, #11045b, #ff4b2b);
+    color: white;
+    border-radius: 30px;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 10px rgba(255, 75, 43, 0.3);
+    transition: all 0.3s ease-in-out;
+    border: none;
+    cursor: pointer;
+    margin-right: 8px;
+    font-size: 18px;
+    float:left;
+}
 
         .add-new-btn:hover {
             background: #0056b3;
@@ -153,7 +175,7 @@
             <a href="/admin/product" class="add-new-btn">+ Add Product</a>
 
             <!-- Product List -->
-            <h3>Product List</h3>
+            <h3>Available Products</h3>
 
             <!-- Product Table -->
             <table class="table table-bordered admin-table">

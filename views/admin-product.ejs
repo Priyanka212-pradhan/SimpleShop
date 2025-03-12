@@ -57,7 +57,7 @@
         } */
 
         /* Centering the table */
-        .admin-table-container {
+        /* .admin-table-container {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -73,14 +73,91 @@
         td {
             padding: 10px;
             text-align: left;
-        }
+        } */
 
-        /* Table Image Styling */
-        .admin-table img {
-            width: 50px;
-            height: auto;
-            border-radius: 5px;
-        }
+        .admin-table-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 50px auto;
+    padding: 20px;
+    width: 95%;
+    max-width: 1200px;
+    background: linear-gradient(135deg, #1e1e2f, #3a3a5f);
+    border-radius: 16px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    color: white;
+}
+
+.admin-table-container h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    color: #f1f1f1;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #25253a;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.admin-table th, 
+.admin-table td {
+    padding: 14px 20px;
+    text-align: center;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.admin-table th {
+    background: #ff6b6b;
+    color: white;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.admin-table td {
+    color: #f1f1f1;
+    transition: background 0.3s ease-in-out;
+}
+
+.admin-table tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.admin-table tr:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.admin-table img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    transition: transform 0.3s ease-in-out;
+}
+
+.admin-table img:hover {
+    transform: scale(1.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .admin-table-container {
+        padding: 15px;
+        width: 100%;
+    }
+
+    .admin-table th, 
+    .admin-table td {
+        padding: 10px;
+    }
+}
+
 
         /* Add New Button Alignment */
         .add-new-btn {
